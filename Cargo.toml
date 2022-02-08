@@ -9,3 +9,7 @@ edition = "2021"
 uuid = {version = "0.8", features = ["v1", "v4"]}
 getrandom = "*"
 pico-args = "*"
+
+[profile.release]
+opt-level = "z"
+lto = true
