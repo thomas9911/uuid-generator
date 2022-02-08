@@ -15,8 +15,8 @@ f21318cab06c43468e999cb88037e1f5
 
 Options:
 -n, --amount [AMOUNT]           The amount of uuids to generate, default: 1
--f, --format [FORMAT]           The format to output the uuids, default: normal
--v, --version [VERSION]         The with uuid version to use, default: v4
+-f, --format [FORMAT]           The format to output the uuids, default: normal, possible values: [normal, hex]
+-v, --version [VERSION]         The with uuid version to use, default: v4, possible values: [v1, v4]
 
 Examples:
 > uuid -n 10
