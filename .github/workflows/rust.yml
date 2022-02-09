@@ -20,10 +20,25 @@ jobs:
       run: cargo test --verbose
     - name: Run Build
       run: cargo build --release --verbose
-    - uses: actions/upload-artifact@v2
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: uuid
-        path: target/release/uuid
+        tag_name: 0.1.0
+        release_name: 0.1.0
+        draft: true
+        prerelease: false
+
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/release/uuid
+        asset_name: uuid
+        asset_content_type: application/octet-stream
   windows:
     runs-on: windows-latest
     steps:
@@ -34,7 +49,22 @@ jobs:
       run: cargo test --verbose
     - name: Run Build
       run: cargo build --release --verbose
-    - uses: actions/upload-artifact@v2
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: uuid
-        path: target/release/uuid.exe
+        tag_name: 0.1.0
+        release_name: 0.1.0
+        draft: true
+        prerelease: false
+
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/release/uuid.exe
+        asset_name: uuid.exe
+        asset_content_type: application/octet-stream
