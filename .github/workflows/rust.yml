@@ -3,8 +3,6 @@ name: Rust
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -32,30 +30,29 @@ jobs:
     - name: Print package metadata
       run: |
         echo "metadata=${{ steps.cargo-version.outputs.metadata }}"
-  #   - name: Create Draft Release
-  #     id: create_release
-  #     uses: actions/create-release@v1
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     with:
-  #       tag_name: 0.1.0
-  #       release_name: 0.1.0
-  #       draft: true
-  #       prerelease: false
-
-  #   - uses: actions/upload-release-asset@v1.0.1
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     with:
-  #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-  #       asset_path: ./target/release/uuid
-  #       asset_name: uuid
-  #       asset_content_type: application/octet-stream
-  #   - uses: eregon/publish-release@v1
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     with:
-  #       release_id: ${{ steps.create_release.outputs.id }}
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.cargo-version.outputs.metadata }}
+        release_name: ${{ steps.cargo-version.outputs.metadata }}
+        draft: true
+        prerelease: false
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/release/uuid
+        asset_name: uuid
+        asset_content_type: application/octet-stream
+    - uses: eregon/publish-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}
   # windows:
   #   runs-on: windows-latest
   #   steps:
