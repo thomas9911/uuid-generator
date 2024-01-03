@@ -19,10 +19,10 @@ Options:
 -v, --version [VERSION]         The with uuid version to use, default: v4, possible values: [v1, v4, v7]
 
 Examples:
-> uuid -n 10
+> uuid -n 1
 > uuid -v 4 -n 100 -f hex
-> uuid --version 4 --amount 100 --format hex
-
+> uuid --version 4 --amount 100 --format normal
+> uuid --version 7 --amount 56 --format urn
 ";
 
 #[derive(Debug)]
